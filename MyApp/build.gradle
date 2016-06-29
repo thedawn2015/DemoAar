@@ -1,0 +1,37 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
+
+    defaultConfig {
+        applicationId "com.simon.demoaar"
+        minSdkVersion 15
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    /*----------将aar包放在libs目录下（也可以是其它目录，只要对应就行）----------*/
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
+    dependencies {
+        compile fileTree(include: ['*.jar'], dir: 'libs')
+        testCompile 'junit:junit:4.12'
+        compile 'com.android.support:appcompat-v7:24.0.0'
+
+        /*----------将module依赖改为aar依赖----------*/
+//    compile project(':MyModule')
+        compile name:'mymodule-release',ext:'aar'
+    }
+}
